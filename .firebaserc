@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "calculadora-7faa5",
+    "prod": "calculadora-7faa5"
+  },
+  "targets": {},
+  "etags": {}
+}

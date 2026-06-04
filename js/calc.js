@@ -2,20 +2,21 @@ const botonNumeros = document.getElementsByName('data-number');
 const botonOpera = document.getElementsByName('data-opera');
 const botonIgual = document.getElementsByName('data-igual')[0];
 const botonDelete = document.getElementsByName('data-delete')[0];
-var result = document.getElementById('result');
-var opeActual = '';
-var opeAnterior = '';
-var operacion = undefined;
+const result = document.getElementById('result');
+const expresion = document.getElementById('expresion');
+let opeActual = '';
+let opeAnterior = '';
+let operacion = undefined;
 
 botonNumeros.forEach(function(boton){
     boton.addEventListener('click', function(){
-        agregarNumero(boton.innerText);        
+        agregarNumero(boton.innerText);
     })
 });
 
 botonOpera.forEach(function(boton){
     boton.addEventListener('click', function(){
-        selectOperacion(boton.innerText);        
+        selectOperacion(boton.innerText);
     })
 });
 
@@ -40,7 +41,7 @@ function selectOperacion(op){
 }
 
 function calcular(){
-    var calculo;
+    let calculo;
     const anterior = parseFloat(opeAnterior);
     const actual = parseFloat(opeActual);
     if(isNaN(anterior) || isNaN(actual)) return;
@@ -66,6 +67,7 @@ function calcular(){
 }
 
 function agregarNumero(num){
+    if (num === '.' && opeActual.includes('.')) return;
     opeActual = opeActual.toString() + num.toString();
     actualizarDisplay();
 }
@@ -74,12 +76,17 @@ function clear(){
     opeActual = '';
     opeAnterior = '';
     operacion = undefined;
+    expresion.innerText = '';
 }
 
 function actualizarDisplay(){
     result.value = opeActual;
+
+    if (operacion && opeAnterior) {
+        expresion.innerText = `${opeAnterior} ${operacion}`;
+    } else if (!opeActual && !opeAnterior && !operacion) {
+        expresion.innerText = '';
+    }
 }
 
 clear();
-
-
